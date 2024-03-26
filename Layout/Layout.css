@@ -1,0 +1,9 @@
+.add-employee-form input {
+    padding: 8px !important;
+    border-radius: 0px !important;
+}
+
+p {
+    font-size: 14px;
+    padding-bottom: 1px !important;
+}

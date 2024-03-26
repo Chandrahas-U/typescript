@@ -1,0 +1,26 @@
+#profilePic {
+    height: 70px;
+}
+
+.contact-card {
+    background-color: #e9e8e8;
+}
+
+.editButton {
+    background-color: rgb(177, 61, 171);
+    color: aliceblue;
+}
+
+.deleteButton {
+    background-color: rgb(190, 28, 28);
+    color: aliceblue;
+}
+
+.closeButton {
+    background-color: rgb(28, 85, 190);
+    color: aliceblue;
+}
+
+#fullPic{
+    height:260px;
+}
