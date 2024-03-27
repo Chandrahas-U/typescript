@@ -1,13 +1,13 @@
-import Header from "../Layout/Header";
-import Sidebar from "./Sidebar";
+import Header from "./Header";
+import Sidebar from "../SideBar/Sidebar";
 import "./Layout.css";
-import { AlphabetButtons, SearchBar } from "./Navbar";
-import AddEmployeeForm from "./Form";
-import { EmployeeList, DisplayFullContact } from "./ContactCard";
+import { AlphabetButtons, SearchBar } from "../Navbar/Navbar";
+import AddEmployeeForm from "../Forms/Form";
+import { EmployeeList, DisplayFullContact } from "../ContactCard/ContactCard";
 import { useState, useEffect } from "react";
 // import {Employeedata } from "./Form";
 
-const Body: React.FC = () => {
+const Body = () => {
   const [formVisible, setFormVisible] = useState<boolean>(false);
   const [selectedEmployee, setSelectedEmployee] = useState<EmployeeData | null>(
     null

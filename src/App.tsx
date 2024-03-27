@@ -1,7 +1,5 @@
-// import { useState } from 'react'
-
 import './App.css'
-import Body from '../Layout/Body'
+import Body from "./Components/Main/Body"
 
 function App() {
 

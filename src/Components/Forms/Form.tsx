@@ -1,5 +1,5 @@
 
-import React, { useState, ChangeEvent } from "react";
+import  { useState, ChangeEvent } from "react";
 
 interface EmployeeData {
   fname: string;
@@ -19,7 +19,7 @@ interface AddEmployeeFormProps {
   onAddEmployee: (employee: EmployeeData) => void;
 }
 
-const AddEmployeeForm: React.FC<AddEmployeeFormProps> = ({ isVisible, closeForm, onAddEmployee }) => {
+const AddEmployeeForm = ({ isVisible, closeForm, onAddEmployee }: AddEmployeeFormProps) => {
   const [formData, setFormData] = useState<EmployeeData>({
     fname: "",
     lname: "",

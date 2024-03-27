@@ -22,7 +22,7 @@ interface EditEmployeeFormProps {
   onCloseForm: () => void;
 }
 
-const EditEmployeeForm: React.FC<EditEmployeeFormProps> = ({ selectedEmployee, onUpdateEmployee, onCloseForm }) => {
+const EditEmployeeForm = ({ selectedEmployee, onUpdateEmployee, onCloseForm } : EditEmployeeFormProps) => {
   const [formData, setFormData] = useState<Employee>(selectedEmployee);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {

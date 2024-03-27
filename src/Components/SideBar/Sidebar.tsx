@@ -1,5 +1,4 @@
 
-import React from "react";
 // import { EmployeeData } from "./types";
 
 interface SidebarProps {
@@ -7,7 +6,7 @@ interface SidebarProps {
   onCountClick: (property: string, value: string) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ employees, onCountClick }) => {
+const Sidebar = ({ employees, onCountClick }: SidebarProps) => {
   const getCounts = (field: string) => {
     const counts: { [key: string]: number } = {};
     employees.forEach((employee) => {
@@ -46,6 +45,7 @@ const Sidebar: React.FC<SidebarProps> = ({ employees, onCountClick }) => {
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;
+

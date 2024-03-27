@@ -9,7 +9,7 @@ interface AlphabetButtonsProps {
   searchByLetter: (letter: string) => void;
 }
 
-const AlphabetButtons: React.FC<AlphabetButtonsProps> = ({ searchByLetter }) => {
+const AlphabetButtons = ({ searchByLetter }:AlphabetButtonsProps) => {
   const alphabets: string[] = Array.from({ length: 26 }, (_, i) =>
     String.fromCharCode(65 + i)
   );
@@ -40,7 +40,7 @@ interface SearchBarProps {
   searchByText: (keyword: string, filterBy: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ addEmployee, searchByText }) => {
+const SearchBar = ({ addEmployee, searchByText } : SearchBarProps) => {
   const [searchKeyword, setSearchKeyword] = useState<string>("");
   const [filterBy, setFilterBy] = useState<string>("fname");
 

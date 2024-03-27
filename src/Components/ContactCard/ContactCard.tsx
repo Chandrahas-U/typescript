@@ -1,7 +1,6 @@
-
 import React from "react";
 import "./ContactCard.css";
-import EditEmployeeForm from "./EditEmployee";
+import EditEmployeeForm from "../Forms/EditEmployee";
 
 interface Employee {
   id: number;
@@ -19,10 +18,10 @@ interface Employee {
 interface EmployeeListProps {
   Employees: Employee[];
   onEmployeeSelect: (employee: Employee) => void;
-  hideList?: boolean; 
+  hideList?: boolean;
 }
 
-export const EmployeeList: React.FC<EmployeeListProps> = ({ Employees, onEmployeeSelect, hideList }) => {
+export function EmployeeList({ Employees, onEmployeeSelect, hideList }: EmployeeListProps) {
   return (
     <div className={`row pt-4 ${hideList ? 'd-none' : ''}`}>
       {Employees.length > 0 ? (
@@ -54,7 +53,7 @@ export const EmployeeList: React.FC<EmployeeListProps> = ({ Employees, onEmploye
       )}
     </div>
   );
-};
+}
 
 interface DisplayFullContactProps {
   selectedEmployee: Employee | null;
@@ -63,7 +62,7 @@ interface DisplayFullContactProps {
   onCloseFullDetails: () => void;
 }
 
-export const DisplayFullContact: React.FC<DisplayFullContactProps> = ({ selectedEmployee, onDeleteEmployee, onUpdateEmployee, onCloseFullDetails }) => {
+export function DisplayFullContact({ selectedEmployee, onDeleteEmployee, onUpdateEmployee, onCloseFullDetails }: DisplayFullContactProps) {
   const handleDeleteEmployee = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this employee?");
     if (confirmDelete && selectedEmployee) {
@@ -125,15 +124,12 @@ export const DisplayFullContact: React.FC<DisplayFullContactProps> = ({ selected
             </button>
           </div>
           {showEditForm && (
-        <EditEmployeeForm selectedEmployee={selectedEmployee} onUpdateEmployee={updateEmployee} onCloseForm={() => setShowEditForm(false)} />
-      )}
+            <EditEmployeeForm selectedEmployee={selectedEmployee} onUpdateEmployee={updateEmployee} onCloseForm={() => setShowEditForm(false)} />
+          )}
         </div>
 
       </div>
 
     </>
   ) : null;
-};
-
-
-
+}
