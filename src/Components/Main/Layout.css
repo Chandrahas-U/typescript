@@ -2,6 +2,11 @@
     padding: 8px !important;
     border-radius: 0px !important;
 }
+.add-employee-form select {
+    padding: 8px !important;
+    border-radius: 0px !important;
+}
+
 
 p {
     font-size: 14px;
