@@ -27,7 +27,7 @@ class Body extends Component<{}, IBodyState> {
       filteredEmployees: [],
       hideEmployeeList: false,
     };
-
+    
     this.runCountClick = this.runCountClick.bind(this);
   }
 
@@ -55,7 +55,7 @@ class Body extends Component<{}, IBodyState> {
     });
   };
 
-  runCountClick  (property: string | number, value: any)  {
+  runCountClick (property: string | number, value: any) {
     const employees = this.state.employees;
     const filteredEmployees = employees.filter(
       (employee: { [x: string]: any }) => employee[property] === value
@@ -79,7 +79,7 @@ class Body extends Component<{}, IBodyState> {
       selectedEmployee: null,
     });
     // localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
-    setEmployees;
+    setEmployees(updatedEmployees);
   };
 
   runDeleteEmployee = (employeeId: number) => {
@@ -93,7 +93,7 @@ class Body extends Component<{}, IBodyState> {
       selectedEmployee: null,
     });
     // localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
-    setEmployees;
+    setEmployees(updatedEmployees);
   };
 
   runUpdateEmployee = (updatedEmployee: { id: any }) => {
@@ -107,7 +107,7 @@ class Body extends Component<{}, IBodyState> {
       selectedEmployee: updatedEmployee,
     });
     // localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
-    setEmployees;
+    setEmployees(updatedEmployees);
   };
 
   runSearchByText = (inputValue: string, selectValue: string) => {

@@ -2,6 +2,7 @@ import { Component } from "react";
 import { IEmployeeData } from "../../Interface/EmployeeData";
 import { getEmployees } from "../../Services/Sevices";
 import { departments, officeLocations } from "../../Constants/Constants";
+import "./AddForm.css"
 
 interface IAddEmployeeFormProps {
   isVisible: boolean;
@@ -85,11 +86,13 @@ class AddEmployeeForm extends Component<
     const { formData } = this.state;
 
     return (
-      <div className= "add-employee-form col-12 border px-4 py-3">
+      <div className="full-screen">
+              <div className= "add-employee-form col-6 border px-4 py-3">
         <form id="contactForm" onSubmit={this.submitData}>
           <div className="row col-12">
-            <div className="details row col-10">
-              <div className="mb-1 fw-bold col-6 pe-2">
+            <div className="details row col-12">
+            <h2 className="pb-4">Add Employee</h2>
+              <div className="mb-1 fw-bold col-6 pe-2 ">
                 <label htmlFor="fname" className="form-label">
                   First Name
                 </label>
@@ -246,6 +249,8 @@ class AddEmployeeForm extends Component<
           </div>
         </form>
       </div>
+      </div>
+
     );
   }
 }

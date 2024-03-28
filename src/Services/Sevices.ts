@@ -6,5 +6,6 @@ export function getEmployees(): IEmployeeData[] {
 }
 
 export function setEmployees(updatedEmployees: IEmployeeData[]) {
+  
   localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
 }
