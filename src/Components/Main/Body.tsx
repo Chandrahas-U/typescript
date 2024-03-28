@@ -4,19 +4,21 @@ import Sidebar from "../SideBar/Sidebar";
 import "./Layout.css";
 import { AlphabetButtons, SearchBar } from "../Navbar/Navbar";
 import AddEmployeeForm from "../Forms/Form";
-import { EmployeeList, DisplayFullContact } from "../ContactCard/ContactCard";
-import { EmployeeData } from "../Interface/EmployeeData";
+import { EmployeeList } from "../ContactCard/ContactCard";
+import { IEmployeeData } from "../../Interface/EmployeeData";
+import { getEmployees, setEmployees } from "../../Services/Sevices";
+import { DisplayFullContact } from "../ContactCard/FullContact";
 
-interface BodyState {
+interface IBodyState {
   formVisible: boolean;
   selectedEmployee: any;
-  employees: EmployeeData | any;
-  filteredEmployees: EmployeeData | any;
+  employees: IEmployeeData | any;
+  filteredEmployees: IEmployeeData | any;
   hideEmployeeList: boolean;
 }
 
-class Body extends Component<{}, BodyState> {
-  constructor(props: BodyState) {
+class Body extends Component<{}, IBodyState> {
+  constructor(props: IBodyState) {
     super(props);
     this.state = {
       formVisible: false,
@@ -25,10 +27,13 @@ class Body extends Component<{}, BodyState> {
       filteredEmployees: [],
       hideEmployeeList: false,
     };
+
+    this.runCountClick = this.runCountClick.bind(this);
   }
 
   componentDidMount() {
-    const storedData = JSON.parse(localStorage.getItem("Employees") || "[]");
+    // const storedData = JSON.parse(localStorage.getItem("Employees") || "[]");
+    const storedData=getEmployees();
     this.setState({
       employees: storedData,
       filteredEmployees: storedData,
@@ -50,7 +55,7 @@ class Body extends Component<{}, BodyState> {
     });
   };
 
-  runCountClick = (property: string | number, value: any) => {
+  runCountClick  (property: string | number, value: any)  {
     const employees = this.state.employees;
     const filteredEmployees = employees.filter(
       (employee: { [x: string]: any }) => employee[property] === value
@@ -73,7 +78,8 @@ class Body extends Component<{}, BodyState> {
       hideEmployeeList: false,
       selectedEmployee: null,
     });
-    localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
+    // localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
+    setEmployees;
   };
 
   runDeleteEmployee = (employeeId: number) => {
@@ -86,7 +92,8 @@ class Body extends Component<{}, BodyState> {
       filteredEmployees: updatedEmployees,
       selectedEmployee: null,
     });
-    localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
+    // localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
+    setEmployees;
   };
 
   runUpdateEmployee = (updatedEmployee: { id: any }) => {
@@ -99,7 +106,8 @@ class Body extends Component<{}, BodyState> {
       filteredEmployees: updatedEmployees,
       selectedEmployee: updatedEmployee,
     });
-    localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
+    // localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
+    setEmployees;
   };
 
   runSearchByText = (inputValue: string, selectValue: string) => {
@@ -165,7 +173,6 @@ class Body extends Component<{}, BodyState> {
               onEmployeeSelect={(employee: any) =>
                 this.setState({ selectedEmployee: employee })
               }
-              hideList={false}
             />
           )}
           {selectedEmployee && (

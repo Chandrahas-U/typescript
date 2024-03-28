@@ -1,21 +1,23 @@
 import { Component } from "react";
-import { EmployeeData } from "../Interface/EmployeeData";
+import { IEmployeeData } from "../../Interface/EmployeeData";
+import { getEmployees } from "../../Services/Sevices";
+import { departments, officeLocations } from "../../Constants/Constants";
 
-interface AddEmployeeFormProps {
+interface IAddEmployeeFormProps {
   isVisible: boolean;
   closeForm: () => void;
-  onAddEmployee: (employee: EmployeeData) => void;
+  onAddEmployee: (employee: IEmployeeData) => void;
 }
 
-interface AddEmployeeFormState {
-  formData: EmployeeData;
+interface IAddEmployeeFormState {
+  formData: IEmployeeData;
 }
 
 class AddEmployeeForm extends Component<
-  AddEmployeeFormProps,
-  AddEmployeeFormState
+  IAddEmployeeFormProps,
+  IAddEmployeeFormState
 > {
-  constructor(props: AddEmployeeFormProps) {
+  constructor(props: IAddEmployeeFormProps) {
     super(props);
     this.state = {
       formData: {
@@ -47,9 +49,8 @@ class AddEmployeeForm extends Component<
 
   generateID = () => {
     let highestId = 0;
-    const storedData: EmployeeData[] = JSON.parse(
-      localStorage.getItem("Employees") || "[]"
-    );
+    // const storedData: EmployeeData[] = JSON.parse(localStorage.getItem("Employees") || "[]");
+    const storedData = getEmployees();
     storedData.forEach((employee) => {
       if (employee.id > highestId) {
         highestId = employee.id;
@@ -60,11 +61,11 @@ class AddEmployeeForm extends Component<
 
   submitData = () => {
     const id = this.generateID();
-    const employeeData: EmployeeData = { ...this.state.formData, id };
+    const employeeData: IEmployeeData = { ...this.state.formData, id };
     this.props.onAddEmployee(employeeData);
     this.setState({
       formData: {
-        id:0,
+        id: 0,
         fname: "",
         lname: "",
         email: "",
@@ -80,15 +81,11 @@ class AddEmployeeForm extends Component<
   };
 
   render() {
-    const { isVisible } = this.props;
+    // const { isVisible } = this.props;
     const { formData } = this.state;
 
     return (
-      <div
-        className={`add-employee-form col-12 border px-4 py-3 ${
-          isVisible ? "d-block" : "d-none"
-        }`}
-      >
+      <div className= "add-employee-form col-12 border px-4 py-3">
         <form id="contactForm" onSubmit={this.submitData}>
           <div className="row col-12">
             <div className="details row col-10">
@@ -173,10 +170,11 @@ class AddEmployeeForm extends Component<
                   onChange={this.handleChange}
                   required
                 >
-                  <option value="">Select Office Location</option>
-                  <option value="Hyderabad">Hyderabad</option>
-                  <option value="Banglore">Banglore</option>
-                  <option value="USA">USA</option>
+                  {officeLocations.map((location) => (
+                    <option key={location.value} value={location.value}>
+                      {location.label}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className="mb-1 fw-bold col-6 ps-2">
@@ -190,14 +188,14 @@ class AddEmployeeForm extends Component<
                   onChange={this.handleChange}
                   required
                 >
-                  <option value="">Select Department</option>
-                  <option value="Engineering">Engineering</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Finance">Finance</option>
-                  <option value="Human Resources">Human Resources</option>
-                  <option value="Sales">Sales</option>
+                  {departments.map((dept) => (
+                    <option key={dept.value} value={dept.value}>
+                      {dept.label}
+                    </option>
+                  ))}
                 </select>
               </div>
+
               <div className="mb-1 fw-bold col-6 pe-2">
                 <label htmlFor="mobile" className="form-label">
                   Mobile

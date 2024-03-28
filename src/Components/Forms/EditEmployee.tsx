@@ -1,7 +1,8 @@
 import { Component } from "react";
 import "./EditForm.css";
+import { departments, officeLocations } from "../../Constants/Constants";
 
-interface Employee {
+interface IEmployee {
   id: number;
   fname: string;
   lname: string;
@@ -14,21 +15,21 @@ interface Employee {
   skype: string;
 }
 
-interface EditEmployeeFormProps {
-  selectedEmployee: Employee;
-  onUpdateEmployee: (updatedEmployee: Employee) => void;
+interface IEditEmployeeFormProps {
+  selectedEmployee: IEmployee;
+  onUpdateEmployee: (updatedEmployee: IEmployee) => void;
   onCloseForm: () => void;
 }
 
-interface EditEmployeeFormState {
-  formData: Employee;
+interface IEditEmployeeFormState {
+  formData: IEmployee;
 }
 
 class EditEmployeeForm extends Component<
-  EditEmployeeFormProps,
-  EditEmployeeFormState
+  IEditEmployeeFormProps,
+  IEditEmployeeFormState
 > {
-  constructor(props: EditEmployeeFormProps) {
+  constructor(props: IEditEmployeeFormProps) {
     super(props);
     this.state = {
       formData: props.selectedEmployee,
@@ -58,9 +59,9 @@ class EditEmployeeForm extends Component<
     const { formData } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit} className="col-5 ps-3">
-        <div className="EditForm">
-          <div className="fw-bold">
+      <form onSubmit={this.handleSubmit} className="col-8 ps-3">
+        <div className="EditForm row">
+          <div className="fw-bold col-6">
             <label htmlFor="fname">First Name:</label>
             <input
               type="text"
@@ -70,7 +71,7 @@ class EditEmployeeForm extends Component<
               required
             />
           </div>
-          <div className="fw-bold">
+          <div className="fw-bold col-6">
             <label htmlFor="lname">Last Name:</label>
             <input
               type="text"
@@ -90,7 +91,7 @@ class EditEmployeeForm extends Component<
               required
             />
           </div>
-          <div className="fw-bold">
+          <div className="fw-bold col-6">
             <label htmlFor="prefname">Preferred Name:</label>
             <input
               type="text"
@@ -100,7 +101,7 @@ class EditEmployeeForm extends Component<
               required
             />
           </div>
-          <div className="fw-bold">
+          <div className="fw-bold col-6">
             <label htmlFor="jobTitle">Job Title:</label>
             <input
               type="text"
@@ -110,7 +111,7 @@ class EditEmployeeForm extends Component<
               required
             />
           </div>
-          <div className="fw-bold">
+          <div className="fw-bold col-6">
             <label htmlFor="office">Office Location:</label>
             <select
               id="office"
@@ -118,13 +119,14 @@ class EditEmployeeForm extends Component<
               onChange={this.handleChange}
               required
             >
-              <option value="">Select Office Location</option>
-              <option value="Hyderabad">Hyderabad</option>
-              <option value="Banglore">Banglore</option>
-              <option value="USA">USA</option>
+              {officeLocations.map((location) => (
+                <option key={location.value} value={location.value}>
+                  {location.label}
+                </option>
+              ))}
             </select>
           </div>
-          <div className="fw-bold">
+          <div className="fw-bold col-6">
             <label htmlFor="department">Department:</label>
             <select
               id="department"
@@ -132,15 +134,14 @@ class EditEmployeeForm extends Component<
               onChange={this.handleChange}
               required
             >
-              <option value="">Select Department</option>
-              <option value="Engineering">Engineering</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Finance">Finance</option>
-              <option value="Human Resources">Human Resources</option>
-              <option value="Sales">Sales</option>
+              {departments.map((dept) => (
+                <option key={dept.value} value={dept.value}>
+                  {dept.label}
+                </option>
+              ))}
             </select>
           </div>
-          <div className="fw-bold">
+          <div className="fw-bold col-6">
             <label htmlFor="mobile">Mobile:</label>
             <input
               type="text"
@@ -150,7 +151,7 @@ class EditEmployeeForm extends Component<
               required
             />
           </div>
-          <div className="fw-bold">
+          <div className="fw-bold col-6">
             <label htmlFor="skype">Skype ID:</label>
             <input
               type="text"
@@ -160,11 +161,11 @@ class EditEmployeeForm extends Component<
               required
             />
           </div>
-          <br />
-          <div>
+          <div className="py-4 col-4 d-flex justify-content-around">
             <button className="px-3 py-1 btn btn-success" type="submit">
               Update
             </button>
+
             <button
               className="px-3 py-1 btn btn-danger"
               type="button"
@@ -180,3 +181,4 @@ class EditEmployeeForm extends Component<
 }
 
 export default EditEmployeeForm;
+

@@ -1,14 +1,14 @@
 import { Component } from "react";
 import "./Sidebar.css";
-import { EmployeeData } from "../Interface/EmployeeData";
+import { IEmployeeData } from "../../Interface/EmployeeData";
 
 
-interface SidebarProps {
-  employees: EmployeeData[];
+interface ISidebarProps {
+  employees: IEmployeeData[];
   onCountClick: (property: string, value: string) => void;
 }
 
-class Sidebar extends Component<SidebarProps> {
+class Sidebar extends Component<ISidebarProps> {
   getCounts(field: string) {
     const counts: { [key: string]: number } = {};
     this.props.employees.forEach((employee) => {
@@ -19,7 +19,6 @@ class Sidebar extends Component<SidebarProps> {
       else {
         counts[fieldValue] = 1;
       }
-      
     });
     return counts;
   }

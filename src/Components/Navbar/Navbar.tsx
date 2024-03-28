@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "./Navbar.css";
 
-interface AlphabetButtonsProps {
+interface IAlphabetButtonsProps {
   searchByLetter: (letter: string) => void;
 }
 
-class AlphabetButtons extends Component<AlphabetButtonsProps> {
+class AlphabetButtons extends Component<IAlphabetButtonsProps> {
   alphabet: string[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   handleSearchBy = (letter: string): void => {
@@ -31,12 +31,12 @@ class AlphabetButtons extends Component<AlphabetButtonsProps> {
   }
 }
 
-interface SearchBarProps {
+interface ISearchBarProps {
   addEmployee: () => void;
   searchByText: (keyword: string, filterBy: string) => void;
 }
 
-class SearchBar extends Component<SearchBarProps> {
+class SearchBar extends Component<ISearchBarProps> {
   state = {
     searchKeyword: "",
     filterBy: "fname",

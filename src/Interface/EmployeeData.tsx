@@ -1,4 +1,4 @@
-export interface EmployeeData {
+export interface IEmployeeData {
     id: number;
     fname: string;
     lname: string;
