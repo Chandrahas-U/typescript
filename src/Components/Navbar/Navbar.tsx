@@ -2,25 +2,33 @@ import React, { Component } from "react";
 import "./Navbar.css";
 
 interface IAlphabetButtonsProps {
-  searchByLetter: (letter: string) => void;
+  searchByLetter(letter: string): void;
+  Clearall(): void;
 }
 
 class AlphabetButtons extends Component<IAlphabetButtonsProps> {
   alphabet: string[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-  handleSearchBy = (letter: string): void => {
+  SearchBy = (letter: string): void => {
     this.props.searchByLetter(letter);
+  };
+
+  Clearall = (): void => {
+    this.props.Clearall();
   };
 
   render() {
     return (
       <div className="body-2 pt-4">
         <div className="alphabet-buttons pb-3 d-flex justify-content-between">
+          <button className="alpha-buttons border-0" onClick={this.Clearall}>
+            <i className="fa fa-user"></i>
+          </button>
           {this.alphabet.map((letter) => (
             <button
               key={letter}
               className="alpha-buttons border-0"
-              onClick={() => this.handleSearchBy(letter)}
+              onClick={() => this.SearchBy(letter)}
             >
               {letter}
             </button>
@@ -32,8 +40,8 @@ class AlphabetButtons extends Component<IAlphabetButtonsProps> {
 }
 
 interface ISearchBarProps {
-  addEmployee: () => void;
-  searchByText: (keyword: string, filterBy: string) => void;
+  addEmployee(): void;
+  searchByText(keyword: string, filterBy: string): void;
 }
 
 class SearchBar extends Component<ISearchBarProps> {
@@ -53,7 +61,7 @@ class SearchBar extends Component<ISearchBarProps> {
     this.props.searchByText(this.state.searchKeyword, selectedFilter);
   };
 
-  handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  InputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const inputValue: string = e.target.value;
     this.setState({ searchKeyword: inputValue });
     this.props.searchByText(inputValue, this.state.filterBy);
@@ -68,14 +76,14 @@ class SearchBar extends Component<ISearchBarProps> {
             type="text"
             id="myInput"
             value={this.state.searchKeyword}
-            onChange={this.handleInputChange}
-            placeholder="Enter any Keyword"
+            onChange={this.InputChange}
+            placeholder="&#128269; Enter any Keyword"
           />
           <button
             className="clear-button ms-4 px-4 rounded-0 border-0 text-white fw-bold btn btn-success"
             onClick={this.clearSearch}
           >
-            Clear all filters
+            Clear
           </button>
 
           <div className="dropdown border-0 ">

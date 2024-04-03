@@ -4,3 +4,18 @@
     padding: 5px 12px !important;
     font-size: 20px;
 }
+
+.searchBar{
+    width:80%
+}
+.searchBar input{
+    width:40%
+}
+
+.dropdown{
+    width:70%
+}
+
+.dropdown select{
+    width:45%
+}

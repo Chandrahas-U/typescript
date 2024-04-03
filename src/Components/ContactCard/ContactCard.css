@@ -1,5 +1,5 @@
 #profilePic {
-    height: 70px;
+    height: 80px;
 }
 
 .contact-card {
@@ -23,4 +23,9 @@
 
 #fullPic{
     height:260px;
+}
+
+.iconSize {
+    font-size: 12px;
+    color: rgb(44, 42, 42);
 }

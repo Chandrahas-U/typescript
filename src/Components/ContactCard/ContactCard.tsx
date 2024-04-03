@@ -1,15 +1,13 @@
 import { Component } from "react";
 import "./ContactCard.css";
-// import EditEmployeeForm from "../Forms/EditEmployee";
 import { IEmployeeData } from "../../Interface/EmployeeData";
 
-interface EmployeeListProps {
+interface IEmployeeListProps {
   Employees: IEmployeeData[];
   onEmployeeSelect: (employee: IEmployeeData) => void;
-  // hideList: boolean;
 }
 
-export class EmployeeList extends Component<EmployeeListProps> {
+export class EmployeeList extends Component<IEmployeeListProps> {
   render() {
     const { Employees, onEmployeeSelect } = this.props;
     return (
@@ -29,9 +27,13 @@ export class EmployeeList extends Component<EmployeeListProps> {
                   />
                 </div>
                 <div className="employee-info ps-2">
-                  <p>{employee.fname}</p>
+                  <p className="fw-bold">{employee.fname}</p>
                   <p>{employee.jobTitle}</p>
                   <p>{employee.department}</p>
+                  <i className="fa-solid fa-phone iconSize pe-1"></i>
+                  <i className="fa-brands fa-facebook iconSize pe-1"></i>
+                  <i className="fa-brands fa-instagram iconSize pe-1"></i>
+                  <i className="fa-solid fa-heart iconSize"></i>
                 </div>
               </div>
             </div>
@@ -45,7 +47,3 @@ export class EmployeeList extends Component<EmployeeListProps> {
     );
   }
 }
-
-// export default EmployeeList;
-
-

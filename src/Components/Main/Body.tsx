@@ -10,81 +10,86 @@ import { getEmployees, setEmployees } from "../../Services/Sevices";
 import { DisplayFullContact } from "../ContactCard/FullContact";
 
 interface IBodyState {
-  formVisible: boolean;
-  selectedEmployee: any;
+  isformVisible: boolean;
+  selectedEmployee: IEmployeeData | any;
   employees: IEmployeeData | any;
   filteredEmployees: IEmployeeData | any;
   hideEmployeeList: boolean;
+  isEditing: boolean;
 }
 
 class Body extends Component<{}, IBodyState> {
-  constructor(props: IBodyState) {
+  constructor(props: {}) {
     super(props);
     this.state = {
-      formVisible: false,
+      isformVisible: false,
       selectedEmployee: null,
       employees: [],
       filteredEmployees: [],
       hideEmployeeList: false,
+      isEditing: false,
     };
-    
-    this.runCountClick = this.runCountClick.bind(this);
+
+    this.CountClick = this.CountClick.bind(this);
+    this.Clearall = this.Clearall.bind(this);
   }
 
   componentDidMount() {
-    // const storedData = JSON.parse(localStorage.getItem("Employees") || "[]");
-    const storedData=getEmployees();
+    const storedData = getEmployees();
     this.setState({
       employees: storedData,
       filteredEmployees: storedData,
     });
   }
 
-  runSearchByLetter = (letter: string) => {
-    const employees = this.state.employees;
-    const filteredEmployeesByLetter = employees.filter(function (employee: {
+  SearchByLetter = (letter: string) => {
+    const filteredEmployeesByLetter = this.state.employees.filter(function (employee: {
       fname: string;
     }) {
       return employee.fname.toUpperCase().startsWith(letter);
     });
     this.setState({
-      formVisible: false,
+      isformVisible: false,
       hideEmployeeList: false,
       filteredEmployees: filteredEmployeesByLetter,
       selectedEmployee: null,
     });
   };
 
-  runCountClick (property: string | number, value: any) {
-    const employees = this.state.employees;
-    const filteredEmployees = employees.filter(
-      (employee: { [x: string]: any }) => employee[property] === value
+  Clearall() {
+    this.setState({
+      filteredEmployees: this.state.employees,
+    });
+  }
+
+  CountClick(property: string , value: string | any) {
+    const filteredEmployees = this.state.employees.filter(
+      (employee: { [x: string]: IEmployeeData }) => employee[property] === value
     );
     this.setState({
-      formVisible: false,
+      isformVisible: false,
       hideEmployeeList: false,
       filteredEmployees: filteredEmployees,
       selectedEmployee: null,
     });
-  };
+    document.getElementById('myInput')?.setAttribute('value', '');
+  }
 
-  runAddEmployee = (newEmployee: any) => {
+  AddEmployee = (newEmployee: IEmployeeData) => {
     const employees = this.state.employees;
     const updatedEmployees = [...employees, newEmployee];
     this.setState({
       employees: updatedEmployees,
       filteredEmployees: updatedEmployees,
-      formVisible: false,
+      isformVisible: false,
       hideEmployeeList: false,
       selectedEmployee: null,
     });
-    // localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
     setEmployees(updatedEmployees);
   };
 
-  runDeleteEmployee = (employeeId: number) => {
-    const employees = this.state.employees;
-    const updatedEmployees = employees.filter(
+  DeleteEmployee = (employeeId: number) => {
+    const updatedEmployees = this.state.employees.filter(
       (employee: { id: number }) => employee.id !== employeeId
     );
     this.setState({
@@ -92,13 +97,12 @@ class Body extends Component<{}, IBodyState> {
       filteredEmployees: updatedEmployees,
       selectedEmployee: null,
     });
-    // localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
     setEmployees(updatedEmployees);
   };
 
-  runUpdateEmployee = (updatedEmployee: { id: any }) => {
+  UpdateEmployee = (updatedEmployee: { id: number }) => {
     const employees = this.state.employees;
-    const updatedEmployees = employees.map((emp: { id: any }) =>
+    const updatedEmployees = employees.map((emp: { id: number }) =>
       emp.id === updatedEmployee.id ? updatedEmployee : emp
     );
     this.setState({
@@ -106,13 +110,11 @@ class Body extends Component<{}, IBodyState> {
       filteredEmployees: updatedEmployees,
       selectedEmployee: updatedEmployee,
     });
-    // localStorage.setItem("Employees", JSON.stringify(updatedEmployees));
     setEmployees(updatedEmployees);
   };
 
-  runSearchByText = (inputValue: string, selectValue: string) => {
-    const employees = this.state.employees;
-    let filteredEmployees = employees;
+  SearchByText = (inputValue: string, selectValue: string) => {
+    let filteredEmployees = this.state.employees;
     if (inputValue) {
       const property = selectValue.toLowerCase();
       const searchText = inputValue.toLowerCase();
@@ -124,67 +126,84 @@ class Body extends Component<{}, IBodyState> {
       );
     }
     this.setState({
-      formVisible: false,
+      isformVisible: false,
       hideEmployeeList: false,
       filteredEmployees: filteredEmployees,
       selectedEmployee: null,
     });
   };
 
+  AddOrEditEmployee = (employee: IEmployeeData) => {
+    if (this.state.isEditing) {
+      this.UpdateEmployee(employee);
+    } else {
+      this.AddEmployee(employee);
+    }
+    this.setState({ isformVisible: false, isEditing: false });
+  };
+
   render() {
     const {
-      formVisible,
+      isformVisible,
       selectedEmployee,
       employees,
       filteredEmployees,
       hideEmployeeList,
     } = this.state;
+
     return (
       <div className="row">
         <Header />
-        <Sidebar employees={employees} onCountClick={this.runCountClick} />
+        <Sidebar employees={employees} onCountClick={this.CountClick} />
         <div className="SearchFunctions col-10 ps-4">
-          <AlphabetButtons searchByLetter={this.runSearchByLetter} />
+          <AlphabetButtons
+            searchByLetter={this.SearchByLetter}
+            Clearall={this.Clearall}
+          />
           <SearchBar
             addEmployee={() => {
               this.setState({
-                formVisible: !formVisible,
+                isformVisible: !isformVisible,
                 hideEmployeeList: true,
                 selectedEmployee: null,
+                isEditing: false,
               });
             }}
-            searchByText={this.runSearchByText}
+            searchByText={this.SearchByText}
           />
-          {formVisible && (
+          {isformVisible && (
             <AddEmployeeForm
-              isVisible={formVisible}
+              isVisible={isformVisible}
               closeForm={() => {
                 this.setState({
-                  formVisible: !formVisible,
+                  isformVisible: !isformVisible,
                   hideEmployeeList: false,
+                  isEditing: false,
                 });
               }}
-              onAddEmployee={this.runAddEmployee}
+              onAddEmployee={this.AddOrEditEmployee}
+              initialFormData={selectedEmployee}
             />
           )}
           {!hideEmployeeList && !selectedEmployee && (
             <EmployeeList
               Employees={filteredEmployees}
-              onEmployeeSelect={(employee: any) =>
-                this.setState({ selectedEmployee: employee })
+              onEmployeeSelect={(employee: IEmployeeData) =>
+                this.setState({ selectedEmployee: employee, isEditing: true })
               }
             />
           )}
           {selectedEmployee && (
             <DisplayFullContact
               selectedEmployee={selectedEmployee}
-              onDeleteEmployee={this.runDeleteEmployee}
+              onDeleteEmployee={this.DeleteEmployee}
               onCloseFullDetails={() =>
                 this.setState({
                   selectedEmployee: null,
+                  isEditing: false,
                 })
               }
-              onUpdateEmployee={this.runUpdateEmployee}
+              onUpdateEmployee={this.AddOrEditEmployee}
             />
           )}
         </div>

@@ -5,7 +5,7 @@ import { IEmployeeData } from "../../Interface/EmployeeData";
 
 interface ISidebarProps {
   employees: IEmployeeData[];
-  onCountClick: (property: string, value: string) => void;
+  onCountClick(property: string, value: string) : void;
 }
 
 class Sidebar extends Component<ISidebarProps> {
